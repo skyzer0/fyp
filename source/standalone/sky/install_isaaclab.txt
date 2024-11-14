@@ -1,0 +1,70 @@
+
+
+
+
+
+1 Install Isaac sim:
+	IT Managed Launcher Installer.
+		Run: scp -P 22 ja@10.3.150.184:/home/ja/Documents/omniverse-launcher-linux-enterprise.AppImage .
+		####copy AppImage directly from the PC
+
+	Right click launcher installer (omniverse-launcher-linux-enterprise.AppImage)
+		Go to 'Exchange' 
+		Search for sim, install "Isaac sim"
+		Search for steaming, install "Omniverse streaming client"
+		Go to Library launch isaac sim 
+		#####use Isaac sim (Headless Native) + steaming client incase if you are not able to launch Isaac sim 
+		
+2 Install Isaac Lab
+
+	Create Conda environment
+		Run: conda create -n isaaclab python=3.10
+		Run: conda activate isaaclab
+		
+	Install cuda enable pytorch 
+		Run: nvcc --version 
+		(check for cuda version)
+		Run:pip install torch==2.2.2 --index-url https://download.pytorch.org/whl/cu118
+		
+	Install isaac sim package necessary 
+		Run: pip install isaacsim-rl isaacsim-replicator isaacsim-extscache-physics isaacsim-extscache-kit-sdk isaacsim-extscache-kit isaacsim-app --extra-index-url https://pypi.nvidia.com
+	Install dependencies
+		Run: sudo apt install cmake build-essential
+	Clone the Isaac Lab repository
+		Run: git clone https://github.com/isaac-sim/IsaacLab.git
+	Pull all dependent extensions from the registry	
+		Run: isaacsim
+		
+Run script
+	Open vscode> open folder > Isaaclab
+	Run: conda deactivate 
+	Run: conda activate isaaclab
+	Run: ./isaaclab.sh -p source/standalone/demos/hands.py
+	####### optional arguments:
+		   -h, --help           Display the help content.
+		   -i, --install [LIB]  Install the extensions inside Isaac Lab and learning frameworks (rl-games, rsl-rl, sb3, skrl) as extra dependencies. Default is 'all'.
+		   -f, --format         Run pre-commit to format the code and check lints.
+		   -p, --python         Run the python executable provided by Isaac Sim or virtual environment (if active).
+		   -s, --sim            Run the simulator executable (isaac-sim.sh) provided by Isaac Sim.
+		   -t, --test           Run all python unittest tests.
+		   -o, --docker         Run the docker container helper script (docker/container.sh).
+		   -v, --vscode         Generate the VSCode settings file from template.
+		   -d, --docs           Build the documentation from source using sphinx.
+		   -c, --conda [NAME]   Create the conda environment for Isaac Lab. Default name is 'isaaclab'.
+		
+		
+possible error
+	ERROR: THESE PACKAGES DO NOT MATCH THE HASHES FROM THE REQUIREMENTS FILE. If you have updated the package versions, please update the hashes. Otherwise, examine the package contents carefully; someone may have tampered with them.
+	#####The cache may be expired.
+		pip cache purge
+		pip install ....
+		
+		
+	Error] [omni.ext.plugin] Failed to resolve extension dependencies. Failure hints:
+	[omni.isaac.sim.python-4.0.0] dependency: 'omni.isaac.cortex' = { version='^' } can't be satisfied. Available versions:
+	 (none found)
+ Synced registries:
+	 - kit/default         : found 393 packages 
+	 - kit/sdk             : found 302 packages 
+	 - kit/community       : found 350 packages
+	 #####
